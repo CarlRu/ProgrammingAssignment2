@@ -1,0 +1,33 @@
+##this function returns a list that bundles a matrix and if have inverse they return 
+##the matrix can be access by $get() and modificate by $set()
+##the inverse can be access by $getInverse() and modificate by $setInverse
+makeCacheMatrix <- function(x = matrix()) {
+  inv <- NULL
+  set <- function(y){
+    x <<- y
+    inv <<- NULL
+  }
+  get <- function() {x}
+  setInverse <- function(inverse) {inv <<- inverse}
+  getInverse <- function() {inv} 
+  list(set = set, get = get, 
+       setInverse = setInverse, 
+       getInverse = getInverse)
+}
+
+## this function accepts a matrix created by "makeCacheMatrix" 
+##and returns the inverse of the matrix if the matrix of "makeCacheMatrix" 
+##have inverse the funcion calculate the inverse of the inverse any additional 
+##paramters will be solved
+
+cacheSolve <- function(x, ...) {
+  inv <- x$getInverse()
+  if(!is.null(inv)){
+    message("Obteniendo datos ")
+    return(inv)
+  }
+  mat <- x$get()
+  inv <- solve(mat, ...)
+  x$setInverse(inv)
+  inv
+}
